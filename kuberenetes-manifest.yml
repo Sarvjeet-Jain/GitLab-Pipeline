@@ -24,7 +24,7 @@ spec:
         app: "<deployment-name-value>"
     spec:
       containers:
-      - name: lyceum-frontend-container
+      - name: "<container-name-value>"
         image: gcr.io/<project-ID>/<namespace-name-value>:<VERSION>
         imagePullPolicy: Always
         ports:
