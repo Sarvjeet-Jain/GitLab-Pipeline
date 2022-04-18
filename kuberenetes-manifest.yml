@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Namespace
+metadata: 
+  name: "<namespace-name-value>"
+  labels: 
+    name: "<namespace-name-value>"
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "<deployment-name-value>"
+  namespace: "<namespace-name-value>"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "<deployment-name-value>"
+  template:
+    metadata:
+      labels:
+        app: "<deployment-name-value>"
+    spec:
+      containers:
+      - name: lyceum-frontend-container
+        image: gcr.io/<project-ID>/<namespace-name-value>:<VERSION>
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+---
+# This section will create a service in the Kubernetes cluster
+# so that the deployment can be accessed from the outside
+apiVersion: v1
+kind: Service
+metadata:
+  name: "<service-name-value>"
+  namespace: "<namespace-name-value>"
+spec:
+  ports:
+   - name: frontend
+     protocol: TCP
+     port: 3000
+     targetPort: 3000
+  selector:
+    app: "<deployment-name-value>"
